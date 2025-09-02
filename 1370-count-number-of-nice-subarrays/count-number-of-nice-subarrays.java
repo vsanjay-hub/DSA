@@ -16,7 +16,7 @@ class Solution {
                 l1++;
             }
 
-            // shrink l2 for atMost(k-1)
+             
             while (odd2 > k - 1) {
                 if (nums[l2] % 2 == 1) odd2--;
                 l2++;
