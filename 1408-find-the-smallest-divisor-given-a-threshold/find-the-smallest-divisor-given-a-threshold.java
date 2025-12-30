@@ -1,32 +1,27 @@
-import java.util.*;
-
 class Solution {
-    public int smallestDivisor(int[] nums, int threshold) {
-        int left = 1;
-        int right = Arrays.stream(nums).max().getAsInt();  
-        
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            int sum = 0;  
-            
-            for (int n1 : nums) {
-                sum += (n1 + mid - 1) / mid;  
-            }
-            
-            if (sum <= threshold) {
-                right = mid - 1; 
-            } else {
-                left = mid + 1;
-            }
+
+    boolean isPossible(int[] nums, int threshold, int k) {
+        int sum = 0;
+        for (int num : nums) {
+            sum += (num + k - 1) / k; 
         }
-        
-        return left;
+        return sum <= threshold;
     }
-    
-    public static void main(String[] args) {
-        Solution sol = new Solution();
-        int[] nums = {1, 2, 5, 9};
-        int threshold = 6;
-        System.out.println(sol.smallestDivisor(nums, threshold));  
+
+    public int smallestDivisor(int[] nums, int threshold) {
+        int low = 1, high = 0;
+
+        for (int num : nums) {
+            high = Math.max(high, num);
+        }
+
+        while (low < high) {
+            int mid = (low + high) / 2;
+            if (isPossible(nums, threshold, mid))
+                high = mid;
+            else
+                low = mid + 1;
+        }
+        return low;
     }
 }
